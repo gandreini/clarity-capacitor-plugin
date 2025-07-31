@@ -13,7 +13,7 @@
     "ios/Plugin/",
     "ClarityPlugin.podspec"
   ],
-  "author": "Your Name",
+  "author": "Giulio Andreini",
   "license": "MIT",
   "repository": {
     "type": "git",
