@@ -1,5 +1,5 @@
 {
-  "name": "capacitor-plugin-clarity",
+  "name": "@capacitor-plugin/clarity",
   "version": "1.0.0",
   "description": "Capacitor plugin for Microsoft Clarity analytics",
   "main": "dist/plugin.cjs.js",
@@ -17,10 +17,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/capacitor-plugin-clarity.git"
+    "url": "git+https://github.com/giulioandreini/capacitor-plugin-clarity.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/capacitor-plugin-clarity/issues"
+    "url": "https://github.com/giulioandreini/capacitor-plugin-clarity/issues"
   },
   "keywords": [
     "capacitor",

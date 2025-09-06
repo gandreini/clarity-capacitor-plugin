@@ -2,6 +2,7 @@ package com.capacitorplugin.clarity;
 
 import android.content.Context;
 import android.util.Log;
+import java.util.regex.Pattern;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
@@ -15,6 +16,41 @@ import com.microsoft.clarity.models.LogLevel;
 public class ClarityPlugin extends Plugin {
     private static final String TAG = "ClarityPlugin";
     private boolean isInitialized = false;
+    
+    // Input validation patterns
+    private static final Pattern PROJECT_ID_PATTERN = Pattern.compile("^[a-zA-Z0-9-]{8,16}$");
+    private static final Pattern TAG_KEY_PATTERN = Pattern.compile("^[a-zA-Z][a-zA-Z0-9_]{0,63}$");
+    private static final Pattern EVENT_NAME_PATTERN = Pattern.compile("^[a-zA-Z][a-zA-Z0-9_]{0,63}$");
+    
+    /**
+     * Validates project ID format
+     */
+    private boolean isValidProjectId(String projectId) {
+        return projectId != null && PROJECT_ID_PATTERN.matcher(projectId.trim()).matches();
+    }
+    
+    /**
+     * Validates tag key format
+     */
+    private boolean isValidTagKey(String key) {
+        return key != null && !key.trim().isEmpty() && 
+               key.trim().length() <= 64 && TAG_KEY_PATTERN.matcher(key.trim()).matches();
+    }
+    
+    /**
+     * Validates tag value format
+     */
+    private boolean isValidTagValue(String value) {
+        return value != null && value.length() <= 1024;
+    }
+    
+    /**
+     * Validates event name format
+     */
+    private boolean isValidEventName(String eventName) {
+        return eventName != null && !eventName.trim().isEmpty() && 
+               eventName.trim().length() <= 64 && EVENT_NAME_PATTERN.matcher(eventName.trim()).matches();
+    }
 
     @PluginMethod
     public void initialize(PluginCall call) {
@@ -22,6 +58,11 @@ public class ClarityPlugin extends Plugin {
         
         if (projectId == null || projectId.isEmpty()) {
             call.reject("Project ID is required");
+            return;
+        }
+        
+        if (!isValidProjectId(projectId)) {
+            call.reject("Invalid project ID format. Must be 8-16 alphanumeric characters (letters, numbers, hyphens).");
             return;
         }
 
@@ -56,8 +97,18 @@ public class ClarityPlugin extends Plugin {
             return;
         }
         
-        if (value == null || value.isEmpty()) {
+        if (value == null) {
             call.reject("Tag value is required");
+            return;
+        }
+        
+        if (!isValidTagKey(key)) {
+            call.reject("Invalid tag key format. Must start with a letter and contain only alphanumeric characters and underscores (1-64 chars).");
+            return;
+        }
+        
+        if (!isValidTagValue(value)) {
+            call.reject("Invalid tag value. Must not exceed 1024 characters.");
             return;
         }
 
@@ -82,6 +133,11 @@ public class ClarityPlugin extends Plugin {
         
         if (eventName == null || eventName.isEmpty()) {
             call.reject("Event name is required");
+            return;
+        }
+        
+        if (!isValidEventName(eventName)) {
+            call.reject("Invalid event name format. Must start with a letter and contain only alphanumeric characters and underscores (1-64 chars).");
             return;
         }
 
