@@ -72,13 +72,20 @@ public class ClarityPlugin extends Plugin {
             return;
         }
 
+        // Get WebView capture option (defaults to true for Capacitor apps)
+        Boolean enableWebViewCapture = call.getBoolean("enableWebViewCapture");
+        if (enableWebViewCapture == null) {
+            enableWebViewCapture = true; // Default to true for hybrid apps
+        }
+
         getActivity().runOnUiThread(() -> {
             try {
                 ClarityConfig config = new ClarityConfig(projectId);
+                config.enableWebViewCapture(enableWebViewCapture);
                 config.setLogLevel(LogLevel.None);
                 Clarity.initialize(getContext(), config);
                 isInitialized = true;
-                Log.d(TAG, "Clarity initialized successfully");
+                Log.d(TAG, "Clarity initialized successfully with WebView capture: " + enableWebViewCapture);
                 call.resolve();
             } catch (Exception e) {
                 Log.e(TAG, "Failed to initialize Clarity", e);
