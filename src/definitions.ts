@@ -4,6 +4,8 @@
 export interface ClarityInitializeOptions {
   /** The Clarity project ID from your Microsoft Clarity dashboard (8-16 alphanumeric characters) */
   projectId: string;
+  /** Enable WebView capture for hybrid apps (default: true for Capacitor apps) */
+  enableWebViewCapture?: boolean;
 }
 
 /**
@@ -152,7 +154,14 @@ export interface ClarityPlugin {
    *
    * @example
    * ```typescript
+   * // WebView capture enabled by default for Capacitor apps
    * await Clarity.initialize({ projectId: 'abc123def456' });
+   * 
+   * // Explicitly configure WebView capture
+   * await Clarity.initialize({ 
+   *   projectId: 'abc123def456',
+   *   enableWebViewCapture: true 
+   * });
    * ```
    */
   initialize(options: ClarityInitializeOptions): Promise<void>;
