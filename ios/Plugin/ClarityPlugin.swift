@@ -59,12 +59,16 @@ public class ClarityPlugin: CAPPlugin, CAPBridgedPlugin {
             return
         }
         
+        // WebView capture defaults to true for Capacitor applications
+        let enableWebViewCapture = call.getBool("enableWebViewCapture", true)
+        
         DispatchQueue.main.async { [weak self] in
             do {
                 let config = ClarityConfig(projectId: projectId)
+                config.enableWebViewCapture = enableWebViewCapture
                 ClaritySDK.initialize(config: config)
                 self?.isInitialized = true
-                CAPLog.print("Clarity initialized successfully with project ID: \(projectId)")
+                CAPLog.print("Clarity initialized successfully with project ID: \(projectId), WebView capture: \(enableWebViewCapture)")
                 call.resolve()
             } catch {
                 CAPLog.print("Failed to initialize Clarity: \(error.localizedDescription)")
