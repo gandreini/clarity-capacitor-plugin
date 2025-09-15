@@ -48,8 +48,10 @@ For web platforms, integrate Microsoft Clarity directly using their web SDK. See
 import { Clarity } from '@capacitor-plugin/clarity';
 
 // Initialize Clarity with your project ID
+// WebView capture is enabled by default for better session tracking in Capacitor apps
 await Clarity.initialize({ 
-  projectId: 'your-clarity-project-id' 
+  projectId: 'your-clarity-project-id',
+  enableWebViewCapture: true  // Optional: defaults to true
 });
 ```
 
