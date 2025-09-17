@@ -75,7 +75,8 @@ public class ClarityPlugin extends Plugin {
         getActivity().runOnUiThread(() -> {
             try {
                 ClarityConfig config = new ClarityConfig(projectId);
-                config.setLogLevel(LogLevel.None);
+                config.setLogLevel(LogLevel.Verbose);
+                // Note: WebView capture and domain filtering is now configured via Clarity dashboard in SDK 3.0.0+
                 Clarity.initialize(getContext(), config);
                 isInitialized = true;
                 Log.d(TAG, "Clarity initialized successfully");

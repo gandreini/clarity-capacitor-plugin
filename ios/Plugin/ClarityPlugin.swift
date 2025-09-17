@@ -62,6 +62,7 @@ public class ClarityPlugin: CAPPlugin, CAPBridgedPlugin {
         DispatchQueue.main.async { [weak self] in
             do {
                 let config = ClarityConfig(projectId: projectId)
+                // Note: WebView capture is enabled by default in SDK 3.0.0+ and controlled via dashboard
                 ClaritySDK.initialize(config: config)
                 self?.isInitialized = true
                 CAPLog.print("Clarity initialized successfully with project ID: \(projectId)")
